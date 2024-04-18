@@ -12,4 +12,6 @@ public interface DB_Repo extends MongoRepository<Student, Integer> {
 
     Student findByEmailId(String email_id);
 
+    List<Student> findAllByOrderByPhoneNoDesc();
+
 }

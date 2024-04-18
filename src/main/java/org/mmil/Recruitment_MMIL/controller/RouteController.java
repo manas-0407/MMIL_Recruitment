@@ -38,15 +38,18 @@ public class RouteController {
     ResponseEntity<String> userRegister(@RequestBody Student student){
 
         try{
+            System.err.println("First");
             if(db_service.findByEmailId(student.getEmailId()) != null){
                 String invalidUser = "Already Registered";
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("{\n\"message\": \"" + invalidUser + "\"\n}");
             }
 
+            System.err.println("Second");
             String hashedPass = passwordEncoder.encode(student.getPassword());
             student.setPassword(hashedPass);
             // save to DB
+            System.err.println("Eher");
             db_service.save(student);
             String success  = "Registered Successfully";
             return ResponseEntity.status(HttpStatus.OK)
@@ -62,18 +65,6 @@ public class RouteController {
         }
 
     }
-
-//    void display(Student student){
-//        System.err.println(student.getYear());
-//        System.err.println(student.getName());
-//        System.err.println(student.getAdmNo());
-//        System.err.println(student.getBranch());
-//        System.err.println(student.getEmailId());
-//        System.err.println(student.getPhoneNo());
-//        System.err.println(student.getDomain());
-//        System.err.println(student.getPassword());
-//    }
-
 
     @PostMapping(value = "/login")
     ResponseEntity<String> userLogin(@RequestBody Student student){
@@ -112,12 +103,17 @@ public class RouteController {
         return ResponseEntity.ok(all);
     }
 
-}
+    @GetMapping("/phone_number")
+    ResponseEntity<List<Student>> getSortedByNumber(){
 
-/*
-mongodb+srv://manas123:<password>@test-db.kc0ocac.mongodb.net/?retryWrites=true&w=majority
- */
-/*
-user : manas123
-pass : manas
- */
+        List<Student> phoneNumber = db_service.getSortedByPhone();
+        return ResponseEntity.ok(phoneNumber);
+    }
+
+    @GetMapping("/delete_all")
+    ResponseEntity<String> deleteAll(){
+        db_service.clearAll();
+        String failure = "Database Cleared !";
+        return ResponseEntity.status(HttpStatus.OK).body("{\n\"message\": \""+ failure + "\"\n}");
+    }
+}

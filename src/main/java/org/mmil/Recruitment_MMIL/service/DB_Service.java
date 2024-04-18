@@ -3,6 +3,7 @@ package org.mmil.Recruitment_MMIL.service;
 import org.mmil.Recruitment_MMIL.Repository.DB_Repo;
 import org.mmil.Recruitment_MMIL.models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,4 +28,13 @@ public class DB_Service {
         return db_repo.findAll();
     }
 
+    public List<Student> getSortedByPhone() {
+        return db_repo.findAll(Sort.by("phoneNo").ascending());
+    }
+
+
+
+    public void clearAll(){
+        db_repo.deleteAll();
+    }
 }
