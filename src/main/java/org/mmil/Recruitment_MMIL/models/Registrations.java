@@ -1,18 +1,16 @@
 package org.mmil.Recruitment_MMIL.models;
 
-
-import com.mongodb.lang.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Document
-public class Student {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Registrations {
 
     @NonNull
     String name;
@@ -20,8 +18,14 @@ public class Student {
     @NonNull
     String email;
 
-    @NonNull
-    String password;
+    long mobile_no;
 
-    String role;
+    @NonNull
+    String university_roll;
+
+    int year;
+
+    @NonNull
+    String branch;
+
 }
